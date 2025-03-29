@@ -4,6 +4,7 @@
 * [Clase 02 - Introducción a Vue CLI](#id2)
 * [Clase 03 - Estructura del proyecto](#id3)
 * [Clase 04 - Componentes dinámicos](#id4)
+* [Clase 05 - Componentes asíncronos](#id5)
 
 ---
 
@@ -315,3 +316,55 @@ Desde la consola, posicionarse en la carpeta del proyecto y escribir el comando:
 ````
 code .
 ````
+
+---
+
+## Componentes asíncronos [5/23]<a name="id5"></a>
+Los componentes asíncronos en Vue.js son una formidable herramienta que mejora de gran manera el rendimiento y la experiencia de usuario de nuestras aplicaciones. En esencia, permiten cargar componentes solo cuando son necesarios, evitando así la carga inicial de elementos que el usuario podría no utilizar de inmediato. Esto no solo optimiza el tiempo de carga de las aplicaciones, sino también el uso de los recursos del navegador, haciendo que las aplicaciones sean más livianas y ágiles.
+
+### ¿Cómo configurar los DevTools de Vue.js?
+El primer paso sera buscar la herramienta Vue DevTools. La instalación es sencilla:
+1. Accede a la Chrome Store (o Firefox Add-ons si usas Firefox).
+2. Buscar **Vue.js DevTools**.
+3. Instala la versión en el navegador.
+
+Luego de la instalación, cerrar y reabrir la pestaña del navegador para que las DevTools de Vue.js funcionen correctamente.
+
+### ¿Cómo implementar un componente asíncrono en Vue.js?
+Para crear un componente asíncrono, se utiliza la función **defineAsyncComponent** proporcionada por la biblioteca de Vue.js. Este es un procedimiento simple que se lleva a cabo mediante estos pasos:
+
+1. Importar la función defineAsyncComponent:
+````javascript
+import { defineAsyncComponent } from "vue";
+````
+2. Definir el componente de manera asíncrona: Se declara una variable para el componente y se define el uso de defineAsyncComponent mediante una función flecha para importar el componente deseado.
+````javascript
+const HelloWorld = defineAsyncComponent(() => import("./components/HelloWorld.vue"));
+````
+3. Registrar el componente: se declara el nombre de la variable en la sección *components* de tu componente padre para que Vue.js lo reconozca y se pueda utilizar.
+
+Con esta configuración, el componente se cargará solo cuando sea necesario, mejorando así la eficiencia de tu aplicación.
+
+> [!IMPORTANT]
+> El profesor crea el código para importar el componente en una sola linea, pero la dependencia **eslint** lo marca como error ya que debe hacerse respetando una separación de enter y espacios. Leer la ayuda que entrega VSC para corregirlo.
+
+````javascript
+const HelloWorld = defineAsyncComponent(() =>
+  import("./components/HelloWorld.vue")
+);
+````
+
+### ¿Qué ventajas ofrece el uso de componentes asíncronos?
+Ofrece varias ventajas importantes como:
+* Rendimiento mejorado: Al cargar únicamente los componentes necesarios, se reduce en gran parte el tiempo de carga inicial de la aplicación.
+* Código más limpio y organizado: Separar los componentes en distintos archivos permite mantener un código más estructurado y fácil de mantener.
+* Optimización del uso de recursos: Mejora el uso de recursos tanto del cliente como del servidor, al no requerir la carga completa de todos los componentes desde el inicio.
+
+### ¿Qué sucede al compilar una aplicación Vue.js?
+Cuando se compila una aplicación se genera una carpeta **dist** que contiene todos los archivos necesarios para ejecutar la aplicación en un entorno de producción. Este proceso elimina la carpeta anterior y crea una nueva con los siguientes elementos:
+* Archivos CSS y JavaScript minificados: Estos archivos son utilizados para asegurar que la aplicación sea ligera y rápida de cargar.
+* Archivos estáticos: Imágenes y otros recursos que la aplicación utiliza.
+* Código JavaScript compilado: El archivo principal de JavaScript que incluye la lógica de la aplicación.
+* Versionado de archivos: Cada archivo recibe un identificador único (id) para facilitar el manejo de versiones y evitar confusiones con versiones anteriores.
+
+---
