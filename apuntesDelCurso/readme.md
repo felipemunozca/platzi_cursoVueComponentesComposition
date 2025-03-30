@@ -5,6 +5,7 @@
 * [Clase 03 - Estructura del proyecto](#id3)
 * [Clase 04 - Componentes dinámicos](#id4)
 * [Clase 05 - Componentes asíncronos](#id5)
+* [Clase 06 - Transiciones](#id6)
 
 ---
 
@@ -368,3 +369,60 @@ Cuando se compila una aplicación se genera una carpeta **dist** que contiene to
 * Versionado de archivos: Cada archivo recibe un identificador único (id) para facilitar el manejo de versiones y evitar confusiones con versiones anteriores.
 
 ---
+
+## Transiciones [6/23]<a name="id6"></a>
+Uno de los componentes más importantes dentro de Vue.js es el componente **Transition**. Este permite aplicar estilos CSS a elementos que aparecen o desaparecen en pantalla, como por ejemplo un menú desplegable.
+
+### ¿Cómo se configura un proyecto?
+El proyecto sera un menú que se muestra y oculta. Esto se logra mediante la manipulación de una variable booleana que controlará la visibilidad del menú, por lo que el primer paso sera crear dicha variable con un valor false por defecto:
+````javascript
+data() {
+  return {
+    show: false
+  };
+},
+````
+
+## ¿Cómo crear un menú desplegable?
+Para el menú, se crea un nuevo componente que muestra opciones en una lista:
+````html
+<!-- Componente Menu.vue -->
+<template>
+  <ul v-if="show">
+    <li>Opción uno</li>
+    <li>Opción dos</li>
+    <li>Opción tres</li>
+  </ul>
+</template>
+````
+
+### ¿Cómo implementar un básico V-IF y V-SHOW?
+Se utiliza la directiva **v-if** para mostrar u ocultar el menú basándose en la variable show.
+Sin embargo, la directiva ** v-show** puede ser una alternativa para solo aplicar un CSS de *display: none* en vez de montar o desmontar el elemento del DOM, mejorando así el rendimiento de la aplicación.
+
+### ¿Qué es un componente Transition?
+El componente **transition** se utiliza para envolver un único elemento y permitir la aplicación de **efectos de entrada y salida**. Para configurar, se necesitar definir el nombre de la transición, que será utilizada para nombrar las clases CSS asociadas:
+````javascript
+<transition name="fade">
+  <menu v-if="show"></menu>
+</transition>
+````
+
+### ¿Qué clases CSS son necesarias para la transición?
+Al predefinir un nombre para la transición, se pueden crear clases CSS específicas que manejan los tres estados de una transición: inicio, activo y final. Estos se denominan:
+* from (inicio)
+* active (activo)
+* to (final)
+````css
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+````
+
+### ¿Cómo aplicar animaciones como fade in y fade out?
+Para lograr un efecto visual suave al mostrar o ocultar el menú, se puede modificar la opacidad del elemento. Se utilizan propiedades de CSS como *transition* y *opacity* para lograr un desvanecimiento.
++ **opacity: 0;** al comenzar a ocultar el elemento
++ **opacity: 1;** cuando el elemento es completamente visible
