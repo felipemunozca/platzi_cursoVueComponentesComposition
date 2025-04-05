@@ -6,6 +6,7 @@
 * [Clase 04 - Componentes dinámicos](#id4)
 * [Clase 05 - Componentes asíncronos](#id5)
 * [Clase 06 - Transiciones](#id6)
+* [Clase 07 - Teleports](#id7)
 
 ---
 
@@ -383,7 +384,7 @@ data() {
 },
 ````
 
-## ¿Cómo crear un menú desplegable?
+### ¿Cómo crear un menú desplegable?
 Para el menú, se crea un nuevo componente que muestra opciones en una lista:
 ````html
 <!-- Componente Menu.vue -->
@@ -426,3 +427,80 @@ Al predefinir un nombre para la transición, se pueden crear clases CSS específ
 Para lograr un efecto visual suave al mostrar o ocultar el menú, se puede modificar la opacidad del elemento. Se utilizan propiedades de CSS como *transition* y *opacity* para lograr un desvanecimiento.
 + **opacity: 0;** al comenzar a ocultar el elemento
 + **opacity: 1;** cuando el elemento es completamente visible
+
+---
+
+## Teleports [7/23]<a name="id7"></a>
+Los **teleports**, anteriormente conocidos como **portals** en Vue.js 2, son una característica de Vue que permite mover un componente a una ubicación diferente dentro del DOM, sin cambiar la forma en que esta organizado el código. 
+Esto es sumamente útil, por ejemplo, para mostrar un modal que debería aparecer al nivel del *body* sino en un componente interno.
+
+### ¿Cómo crear un modal con teleports?
+Se crea un componente nuevo con el código para un modal básico. Aquí se utilizara la función **teleport** para desplazar el componente al **body** del documento HTML.
+````vue
+<template>
+    <div>
+        <button @click="toggle">Abrir Modal</button>
+        <teleport to="body">
+            <div v-show="show" class="modal">
+                <h1>Título del Modal</h1>
+                <p>Contenido del modal.</p>
+                <button @click="toggle">Cerrar</button>
+            </div>
+        </teleport>
+    </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      show: false
+    }
+  },
+  methods: {
+    toggle() {
+      this.show = !this.show;
+    }
+  }
+}
+</script>
+
+<style scoped>
+.modal {
+  /* Aquí puedes agregar estilos para el modal */
+}
+</style>
+````
+
+Este código establece que el nuevo componente utilizara la directica **v-show** para controlar la visibilidad del modal, la variable **show** con un valor *false* por defecto y la función **toggle()** para cambiar el valor de la variable y si se mostrara o no el modal.
+
+### ¿Cómo funcionan los teleports en Vue.js?
+Cuando se desea que una parte del componente se muestre en una ubicación diferente, simplemente se debe encapsular esa parte de codigo dentro del elemento < teleport > y luego definir su nuevo destino utilizando el atributo **to**.
+
+### Ejemplo de uso de teleports
+En el código del ejemplo anterior, el componente *modal* está envuelto dentro de la etiqueta < teleport to="body" >, lo que permite que el contenido se inserte al final del < body > del documento.
+Al abrir el inspector de elementos, se vera de la siguiente manera:
+````javascript
+<body>
+  ...
+  <teleport start></teleport>
+  <div class="modal" style="display: none;">
+    <h1>Título del Modal</h1>
+    <p>Contenido del modal.</p>
+    <button>Cerrar</button>
+  </div>
+  <teleport end></teleport>
+</body>
+````
+Esta estructura muestra claramente cómo los elementos se han movido dentro del < body >, manteniendo una organización lógica dentro del archivo Vue específico.
+
+### ¿Cuáles son las ventajas y recomendaciones de los teleports?
+El uso de teleports ayuda a mantener una mejor organización y reutilización del código.  Algunos beneficios y recomendaciones:
+
+1. **Modularidad**: Mantener el código fragmentado y modular. De esta forma se puede definir componentes complejos que se pueden plasmar en diferentes partes del DOM sin desorganizar el código fuente original.
+2. **Reutilización**: Un archivo Vue puede exportarse y utilizarse en diferentes proyectos, utilizando siempre el mismo esquema, pero mostrando el componente donde más se adapte visualmente.
+3. **Flexibilidad de diseño**: Permite ajustar la disposición del contenido en el DOM, mejorando la presentación de algunos elementos como modales, tooltips, entre otros.
+4. **Separación de Concerns**: Al separar la lógica de visualización de la lógica de estructura en la aplicación, es más fácil manejar estilos, scripts y demás cuestiones relacionadas con la presentación.
+
+---
+
