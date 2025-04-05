@@ -7,6 +7,7 @@
 * [Clase 05 - Componentes asíncronos](#id5)
 * [Clase 06 - Transiciones](#id6)
 * [Clase 07 - Teleports](#id7)
+* [Clase 08 - Virtual DOM](#id8)
 
 ---
 
@@ -501,6 +502,43 @@ El uso de teleports ayuda a mantener una mejor organización y reutilización de
 2. **Reutilización**: Un archivo Vue puede exportarse y utilizarse en diferentes proyectos, utilizando siempre el mismo esquema, pero mostrando el componente donde más se adapte visualmente.
 3. **Flexibilidad de diseño**: Permite ajustar la disposición del contenido en el DOM, mejorando la presentación de algunos elementos como modales, tooltips, entre otros.
 4. **Separación de Concerns**: Al separar la lógica de visualización de la lógica de estructura en la aplicación, es más fácil manejar estilos, scripts y demás cuestiones relacionadas con la presentación.
+
+---
+
+## Virtual DOM [8/23]<a name="id8"></a>
+El Virtual DOM es un concepto clave detrás de muchos frameworks modernos como Vue.js y React.js que optimiza la manipulación de interfaces de usuario complejas. Proporciona una representación intermedia del DOM real, que es más rápida y eficiente de modificar en memoria antes de aplicar los cambios al DOM tangible del navegador.
+
+### Primero, ¿Qué es el DOM?
+El DOM o Document Object Model es la estructura base de un proyecto web. Se representan todos los objetos HTML como si se tratara de un árbol de elementos, donde el **DOCUMENT** es la raíz, luego viene el header, el body, etc.… Y todo esto se va acomodando en forma de árbol.
+
+![DOM](images/clase_08_1.png)
+
+### ¿Que es el virtual DOM?
+Vue utiliza una capa intermedia hecha en JavaScript con el motivo de que cada vez que se realicen accesos al DOM de forma manual, por ejemplo: utilizando *create element* o *getElementById* y otras formas que nos da JavaScript de acceder al DOM para controlarlo, agregar y quitar elementos.
+Luego se obtiene **representación** que es una copia del DOM, pero es un DOM virtual, es decir, es un objeto de JavaScript que esta viviendo en la memoria RAM y por lo tanto es mucho más fácil acceder y modificar como cualquier otro objeto en JS.
+
+![vDOM](images/clase_08_2.png)
+
+### ¿Cómo funciona el Virtual DOM?
+1. **Intermediario en JavaScript**: El Virtual DOM actúa como una capa intermedia que representa el DOM real de manera virtual en JavaScript.
+2. **Modificaciones ágil**: Las actualizaciones se realizan primero en el Virtual DOM, lo cual es más rápido y requiere menos líneas de código que manipular directamente el DOM tradicional.
+3. **Aplicación en bloque de cambios**: Una vez que se han realizado todas las actualizaciones necesarias, el framework aplica de forma eficiente todos los cambios al DOM real de una sola vez, mejorando el rendimiento.
+
+### ¿Por qué no modificar directamente el DOM?
+Acceder y manipular el DOM real puede ser costoso en términos de rendimientos. Cada interacción implica una re-renderización que consume memoria y tiempo de procesamiento. En cambio, al modificar el Virtual DOM primero, se limita el número de interacciones con el DOM real, lo que mejora la eficiencia y la rapidez.
+
+### ¿Cómo afecta el Virtual DOM al desarrollo de componentes?
+El uso del Virtual DOM simplifica la manera en que se manejan los componentes:
+
++ **Actualización reactiva**: Las librerías pueden detectar cambios en los datos y actualizar la representación visual de forma eficiente.
++ **Manejo de componentes complejos**: Facilita la gestión de componentes anidados, haciendo más sencilla la comunicación y el intercambio de datos entre ellos.
++ **Optimización de rendimiento**: Permite realizar optimizaciones automáticas para mejorar el rendimiento sin cambiar mucho del código escrito por el desarrollador.
+
+### ¿Cómo se relaciona con el ciclo de vida de los componentes?
+El Virtual DOM está vinculado de forma directa con el ciclo de vida de los componentes:
+
++ **Montaje y actualización**: Durante el ciclo de vida, el Virtual DOM se utiliza para montar los componentes y garantizar que cualquier cambio de estado requerido se vea reflejado en la interfaz de usuario.
++ **Detección de cambios**: Está diseñado para capturar y responder a eventos como prop updates o modificaciones de estado, asegurando que la manipulación del DOM sea lo más eficiente posible.
 
 ---
 
