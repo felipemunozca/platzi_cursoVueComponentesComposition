@@ -8,6 +8,7 @@
 * [Clase 06 - Transiciones](#id6)
 * [Clase 07 - Teleports](#id7)
 * [Clase 08 - Virtual DOM](#id8)
+* [Clase 09 - Entendiendo el ciclo de vida de los componentes](#id9)
 
 ---
 
@@ -542,3 +543,89 @@ El Virtual DOM está vinculado de forma directa con el ciclo de vida de los comp
 
 ---
 
+## Entendiendo el ciclo de vida de los componentes [9/23]<a name="id9"></a>
+Uno de los conceptos fundamentales que se debe dominar es el ciclo de vida de un componente, que determina su uso desde su creación hasta su eliminación. 
+Cada componente pasa por una serie de fases que son gestionadas por un conjunto de funciones conocidas como **hooks** del ciclo de vida. Esto ayuda a administrar cambios en el virtual DOM de manera eficiente y optimizada.
+
+### ¿Cómo se inicializa un componente en Vue.js?
+El proceso comienza con la ejecución de las funciones **createApp** y **mount**, que crean la instancia raíz de Vue.js. 
+Durante esta etapa, se inicializan todos los eventos y las funciones del ciclo de vida necesario para cada componente. Posteriormente, el componente se inicia en un estado llamado **beforeCreate()**. Aquí, se puede ejecutar código que preparará el terreno antes del inicio del componente, como declaración de variables o carga inicial de inspiraciones.
+````vue
+beforeCreate() {
+    // Código a ejecutar antes de crear el componente.
+}
+````
+
+### ¿Qué ocurre durante la creación del componente?
+Una vez que el componente entra en el estado creado, se ejecuta la función **created()**.
+En este momento, la definición completa del componente ya está establecida, aunque todavía no está adjunta al DOM. Es el punto donde se realizan peticiones de datos o preparaciones que no requieren interacción directa con el DOM.
+````vue
+created() {
+    // Código que se ejecuta una vez creado el componente.
+    // Ideal para descargar datos o ejecutar sincronizaciones.
+}
+````
+
+### ¿Cuándo y cómo se monta un componente al DOM?
+El siguiente paso dentro del ciclo de vida es el montaje del componente en el DOM.
+Antes de este evento, la función **beforeMount()** será ejecutada, permitiendo hacer ajustes finales antes de que el componente esté visible en el documento.
+````vue
+beforeMount() {
+    // Código que se ejecuta antes de montar el componente en el DOM.
+}
+````
+Tras ello, el componente es finalmente montado y la función **mounted()** se dispara, permitiendo realizar actividades que requieren el componente ya esté en el DOM, tales como manipulación de elementos específicos o inicialización de librerías basadas en el DOM.
+````vue
+mounted() {
+    // Código que se ejecuta cuando el componente está montado.
+    // Manipulación de elementos DOM.
+````
+
+### ¿Qué sucede cuando el componente tiene que actualizarse?
+Una vez montado, el componente está en un estado reactivo y cualquier cambio en sus datos puede desencadenar una actualización. 
+Antes de este cambio, la función **beforeUpdate()** se ejecuta para permitir ajustes previos a la modificación del DOM.
+````vue
+beforeUpdate() {
+    // Código que se ejecuta antes de actualizar el DOM.
+}
+````
+Tras la actualización, la función **updated()** se ejecuta, donde se puede realizar operaciones post-actualización.
+````vue
+updated() {
+    // Código que se ejecuta después de una actualización del DOM.
+}
+````
+
+### ¿Cómo es el proceso de desmontaje del componente?
+Cuando un componente necesita ser removido, se ejecutan dos funciones importantes: **beforeUnmount()** y **unmounted()**.
+En beforeUnmount, tienes la oportunidad de limpiar recursos, cerrar conexiones o eliminar cualquier referencia vinculada al componente antes de que desaparezca completamente.
+````vue
+beforeUnmount() {
+    // Código para la limpieza antes de desmontar el componente.
+}
+````
+Finalmente, unmounted marca el momento en que el componente ya ha sido desligado del DOM y te permite notificar a otros componentes o realizar limpieza adicional.
+````vue
+unmounted() {
+    // Código final después de desmontar el componente
+}
+````
+
+### Árbol del ciclo de vida
+Para comprender mejor el ciclo de vida de los componentes, se puede ver graficado en esta imagen.
+
+![ciclo de vida](images/clase_09_1.png)
+
+> [!IMPORTANT]
+> En la documentación de Vue, el ciclo beforeUnmount() puede aparecer como beforeDestroy() y el ciclo unmounted() puede aparecer como destroyed.
+
+1. beforeCreate.
+2. created.
+3. beforeMount.
+4. mounted.
+5. beforeUpdate.
+6. updated.
+7. beforeUnmount (beforeDestroy).
+8. unmounted (destroyed).
+
+---
