@@ -10,6 +10,7 @@
 * [Clase 08 - Virtual DOM](#id8)
 * [Clase 09 - Entendiendo el ciclo de vida de los componentes](#id9)
 * [Clase 10 - Explorando los primeros hooks del ciclo de vida de Vue](#id10)
+* [Clase 11 - Mixins](#id11)
 
 ---
 
@@ -675,3 +676,61 @@ Sin embargo, el elemento del DOM aún no está disponible, puesto que el compone
 	* En este momento, tanto el objeto "data" como el elemento del DOM están presentes. Esto permite interactuar con el DOM utilizando JavaScript puro, pudiendo modificar o acceder al HTML del componente.
 
 ---
+
+## Mixins [11/23]<a name="id11"></a>
+Los mixins en Vue.js son una herramienta poderosa dentro de la Options API para reutilizar código en diferentes componentes. Al igual que una biblioteca, permiten definir atributos, métodos y lógica que pueden ser compartidos a través de varios componentes.
+
+### ¿Cómo se crea un mixin?
+Para crear un mixin, simplemente se define un archivo que contenga la lógica que se quiere reutilizar. Lo usual es almacenar estos archivos en una carpeta especial llamada **/mixins**. Este archivo solo contendrá la parte de JavaScript necesaria. Por ejemplo:
+````vue
+// mixins/base.js
+export default {
+  data() {
+    return {
+      texto: 'Este es un texto desde el mixin'
+    }
+  },
+  created() {
+    console.log('base created');
+  }
+}
+````
+
+### ¿Cómo se utiliza un mixin en un componente?
+Una vez creado el mixin, se importa y se agrega al componente. Esto se logra importándolo en la sección "script" del componente y añadiéndolo a la opción mixins:
+````vue
+// En el componente Vue
+import baseMixin from '@/mixins/base';
+
+export default {
+  mixins: [baseMixin],
+  data() {
+    return {
+      // otras propiedades de data del componente
+    }
+  },
+  created() {
+    console.log('Componente creado');
+  }
+}
+````
+Al utilizar este mixin, el componente podrá acceder a las propiedades y métodos definidos en el otro archivo.
+
+### ¿Cuáles son las ventajas y desventajas de los mixins?
+Los mixins ofrecen múltiples beneficios, como la modularización y la simplificación del código al permitir la reutilización de lógica común en varios componentes. Sin embargo, también presentan ciertos desafíos:
+
+**Ventajas**:
+* Reutilización de lógica común.
+* Centralización de código que puede ser utilizado en diversos componentes.
+* Reducción de la duplicación de código.
+
+**Desventajas**:
+* Visibilidad reducida: No es evidente qué datos o funciones están disponibles en un componente sin revisar el archivo del mixin.
+* Colisión de nombres: Si un mixin y un componente definen la misma propiedad con el mismo nombre, prevalecerá la del componente, lo cual puede resultar confuso.
+* Dificultad de depuración: Modificaciones en un mixin pueden afectar múltiples componentes, complicando el proceso de depuración.
+
+### ¿Qué futuro tienen los mixins con Vue 3?
+Con la llegada de **Composition API** se crea una nueva forma de estructurar y reutilizar código. Esta API funcional reemplaza en gran medida a los mixins al ofrecer una sintaxis más clara y directa, eliminando la necesidad de 'trucos' para la reutilización de código.
+
+---
+
