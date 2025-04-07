@@ -9,6 +9,7 @@
 * [Clase 07 - Teleports](#id7)
 * [Clase 08 - Virtual DOM](#id8)
 * [Clase 09 - Entendiendo el ciclo de vida de los componentes](#id9)
+* [Clase 10 - Explorando los primeros hooks del ciclo de vida de Vue](#id10)
 
 ---
 
@@ -627,5 +628,50 @@ Para comprender mejor el ciclo de vida de los componentes, se puede ver graficad
 6. updated.
 7. beforeUnmount (beforeDestroy).
 8. unmounted (destroyed).
+
+---
+
+## Explorando los primeros hooks del ciclo de vida de Vue [10/23]<a name="id10"></a>
+El ciclo de vida de los componentes en Vue es una herramienta crucial para los desarrolladores, permitiendo gestionar el tiempo de vida de un componente desde su creación hasta su destrucción.
+
+### ¿Qué hooks del ciclo de vida podemos usar?
+Vue ofrece varios **hooks** que se pueden utilizar para ejecutar código en diferentes etapas del ciclo de vida de un componente. Algunos de los hooks más comunes son:
+
++ **beforeCreate**: se ejecuta antes de que el componente sea creado.
++ **created**: se ejecuta después de que el componente ha sido creado.
++ **mounted**: se ejecuta una vez que el componente ha sido insertado en el DOM.
++ **unmounted**: se ejecuta cuando el componente ha sido removido del DOM.
+
+### Ejemplo práctico
+A continuación, presentamos un script que implementa algunos de estos hooks dentro de un componente Vue, mostrando cómo y cuándo podemos acceder a diferentes partes del componente:
+````vue
+export default {
+  data() {
+    return {
+      text: 'Hola, Vue',
+    };
+  },
+  beforeCreate() {
+    console.log('beforeCreate: ', this.data, this.$el);
+  },
+  created() {
+    console.log('created: ', this.data, this.text);
+  },
+  mounted() {
+    console.log('mounted: ', this.data, this.$el);
+  }
+}
+````
+
+### ¿Qué sucede con los objetos data y DOM en cada hook?
+Al ejecutar el anterior y observar los resultados en la consola del navegador, se puede analizar el comportamiento de los diferentes hooks:
+
+1. beforeCreate:
+	* En este punto, el objeto "data" está vacío y el elemento del DOM (this.$el) aún no existe. No se han inicializado las variables reactivas de Vue.
+2. created:
+	* Aquí, el objeto "data" ya ha sido creado y la variable "text" está disponible.
+Sin embargo, el elemento del DOM aún no está disponible, puesto que el componente no ha sido montado.
+3. mounted:
+	* En este momento, tanto el objeto "data" como el elemento del DOM están presentes. Esto permite interactuar con el DOM utilizando JavaScript puro, pudiendo modificar o acceder al HTML del componente.
 
 ---
