@@ -1,27 +1,20 @@
+<!-- 
+  N_12.1: Se crea un template que rescatara información de usuarios como si se tratara de un repositorio de GitHub donde se colocara un nombre de usuario y retornara todos sus repositorios.
+-->
 <template>
-  <div>{{ text }}</div>
-  <div>{{ algo }}</div>
+  <UserRepositories :user="'Diana'"></UserRepositories>
 </template>
 
 <script>
-import base from "@/mixins/base";
+/*
+  N_12.3: Se importa el archivo componente.
+*/
+import UserRepositories from "./components/UserRepositories.vue";
 
 export default {
   name: "App",
-  mixins: [base],
-  data() {
-    return {
-      text: "Hola Vue",
-    };
-  },
-  beforeCreate() {
-    console.log("beforeCreate", this.$data, this.$el);
-  },
-  created() {
-    console.log("created", this.$data, this.$el);
-  },
-  mounted() {
-    console.log("mounted", this.$data, this.$el);
+  components: {
+    UserRepositories,
   },
 };
 </script>

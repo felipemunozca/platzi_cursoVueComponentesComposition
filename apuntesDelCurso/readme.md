@@ -11,6 +11,7 @@
 * [Clase 09 - Entendiendo el ciclo de vida de los componentes](#id9)
 * [Clase 10 - Explorando los primeros hooks del ciclo de vida de Vue](#id10)
 * [Clase 11 - Mixins](#id11)
+* [Clase 12 - Introducción a Composition API](#id12)
 
 ---
 
@@ -734,3 +735,46 @@ Con la llegada de **Composition API** se crea una nueva forma de estructurar y r
 
 ---
 
+## Introducción a Composition API [12/23]<a name="id12"></a>
+La Composition API ofrece una nueva manera de escribir componentes más organizados y estructurados, especialmente para aquellos que son extensos y complejos.
+
+### ¿Cómo se diferencia de Options API?
+Antes de la versión 3 de Vue.js, la estructura de los componentes se basaba en un JSON de configuración. Este JSON contenía métodos, funciones y propiedades computadas, entre otras características. Aunque funcionaba, este enfoque a veces podía resultar en código desorganizado, especialmente en componentes extensos.
+Por otro lado, la **Composition API** no reemplaza a la **Options API**, pero presenta una alternativa funcional y reactiva. Mantiene los mismos conceptos originales pero organiza el código de una forma diferente. Las funciones son el núcleo de este sistema, facilitando la organización y flexibilidad en el manejo de estructuras de datos y lógica.
+
+### ¿Cómo empezar con la función setup?
+La función **setup()** es el corazón de la Composition API. Se comporta como un hook de ciclo de vida, similar a *created*, *mounted*, o *unmounted*, pero es el primer hook que se ejecuta. Este anticipado inicio permite preparar y configurar los datos antes de cualquier otro evento del ciclo de vida.
+
+### Uso de la función setup
+La setup recibe dos argumentos: los **props** del componente y el **contexto** del componente. Estos son esenciales para interactuar con las propiedades y funcionalidades del componente, como el emit.
+A continuación, se presenta un ejemplo simple de cómo definir la función setup:
+````vue
+import { ref } from 'vue';
+
+export default {
+  setup(props, context) {
+    const repositorios = ref([]);
+
+    // Funciones y lógica adicional
+
+    return {
+      repositorios
+    };
+  }
+}
+````
+
+### ¿Qué retorna setup?
+Todo lo que se declara en el retorno estará disponible en el scope del componente, accesible tanto para métodos adicionales como para el template.
+
++ **Variables**: Cualquier variable que sea necesaria en el template o en otras funciones.
++ **Funciones**: Métodos que realicen operaciones o lógica significativa en el componente.
+
+### ¿Por qué adoptar Composition API?
+Existen varias razones para considerar la transición hacia la Composition API:
+
++ **Modularidad y organización**: Permite agrupar funciones y variables de acuerdo con su lógica funcional en lugar de su tipo de definición.
++ **Reutilización de código**: La capacidad de crear funciones reutilizables que pueden compartirse entre componentes.
++ **Claridad**: Mejora la claridad y comprensión del componente separando la definición lógica del layout visual.
+
+--- 
