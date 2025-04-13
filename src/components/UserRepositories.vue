@@ -3,6 +3,7 @@
 </template>
 
 <script>
+/*
 export default {
   props: {
     user: {
@@ -33,4 +34,5 @@ export default {
     },
   },
 };
+*/
 </script>

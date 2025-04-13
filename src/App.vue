@@ -1,20 +1,14 @@
-<!-- 
-  N_12.1: Se crea un template que rescatara información de usuarios como si se tratara de un repositorio de GitHub donde se colocara un nombre de usuario y retornara todos sus repositorios.
--->
 <template>
-  <UserRepositories :user="'Diana'"></UserRepositories>
+  <Home></Home>
 </template>
 
 <script>
-/*
-  N_12.3: Se importa el archivo componente.
-*/
-import UserRepositories from "./components/UserRepositories.vue";
+import Home from "./components/HomeComponent.vue";
 
 export default {
   name: "App",
   components: {
-    UserRepositories,
+    Home,
   },
 };
 </script>

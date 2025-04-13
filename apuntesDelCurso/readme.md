@@ -12,6 +12,7 @@
 * [Clase 10 - Explorando los primeros hooks del ciclo de vida de Vue](#id10)
 * [Clase 11 - Mixins](#id11)
 * [Clase 12 - Introducción a Composition API](#id12)
+* [Clase 13 - Ciclo de vida en Composition API](#id13)
 
 ---
 
@@ -778,3 +779,40 @@ Existen varias razones para considerar la transición hacia la Composition API:
 + **Claridad**: Mejora la claridad y comprensión del componente separando la definición lógica del layout visual.
 
 --- 
+
+## Ciclo de vida en Composition API [13/23]<a name="id13"></a>
+La función Setup en Vue.js Composition API es una pieza clave para gestionar los componentes de manera más moderna y funcional. Es considerada como un reemplazo de los elementos tradicionales del ciclo de vida en Vue.
+
+### ¿Cómo se utiliza la función Setup con eventos del ciclo de vida?
+Para integrar la función **setup()** con los eventos del ciclo de vida, se realiza la importación de los ciclos directamente desde Vue.js y se emplea una nomenclatura específica con **onX**, donde **X** representa el evento. Por ejemplo, si deseas ejecutar una función cuando el componente se monta en el DOM, se utilizaría onMounted.
+
+### Ejemplo de uso
+En un archivo de componente, podrías implementar un evento del ciclo de vida de la siguiente manera:
+````vue
+import { onMounted } from 'vue';
+
+export default {
+  setup() {
+    onMounted(() => {
+      console.log('Componente montado');
+    });
+  },
+};
+````
+Con esta estructura, Vue lleva a cabo las mismas acciones que con el Options API, pero con una sintaxis más directa y organizada.
+
+### ¿Cuáles eventos del ciclo de vida han sido modificados?
+La introducción de Setup ha modificado la forma en la que se gestionan algunos eventos del ciclo de vida, particularmente los eventos **beforeCreate** y **created**.
+Estos ya no están disponibles como lo estaban en la sintaxis previa, pues Setup se encarga de sus funcionalidades iniciales, justo en la creación de la instancia del componente, antes de interactuar con el DOM.
+
+### Consideraciones importantes
++ **Reactividad**: Asegurarse de trabajar adecuadamente con el sistema de reactividad de Vue, que es fundamental en el manejador de datos dentro de setup.
++ **Carga y limpieza**: Los eventos del ciclo de vida permiten gestionar eficazmente la adquisición de datos y la limpieza de recursos cuando los componentes son cargados y descargados del DOM.
++ **Continuidad**: Aunque algunos eventos han cambiado su forma de aplicación, la mayoría siguen operando igual, garantizando una continuidad en el funcionamiento de los componentes.
+
+### ¿Cuáles son los beneficios de utilizar Setup?
+* Sintaxis simplificada: La transición a una función genera menos errores y una estructura más ordenada.
+* Compatibilidad y reactividad: Se integra de manera nativa con el sistema de reactividad, mejorando la manipulación de estados en la aplicación.
+* Organización del código: Facilita la separación de lógica de negocio y presentación, promoviendo una arquitectura más mantenible.
+
+---
