@@ -15,6 +15,7 @@
 * [Clase 13 - Ciclo de vida en Composition API](#id13)
 * [Clase 14 - Variables reactivas con ref y reactive](#id14)
 * [Clase 15 - Watch](#id15)
+* [Clase 16 - Computed](#id16)
 
 ---
 
@@ -953,3 +954,50 @@ Implementar watchers con el Composition API difiere ligeramente a como se haría
 + **Ventajas de la sintaxis moderna**: La sintaxis basada en funciones permite mayor claridad y separación lógica dentro del componente, siendo más escalable en aplicaciones grandes.
 
 ---
+
+## Computed [16/23]<a name="id16"></a>
+Las propiedades computadas son **funciones declarativas** que se basan en propiedades reactivas para devolver un resultado.
+A diferencia de las funciones simples, las propiedades computadas se almacenan en caché de manera eficiente hasta que sus dependencias cambian, evitando procesos innecesarios y optimizando el rendimiento.
+
+### Ventajas de usar propiedades computadas:
++ **Legibilidad**: El código es más limpio y fácil de entender.
++ **Eficiencia**: Vue almacena en caché las propiedades computadas hasta que una de sus dependencias cambia.
++ **Reusabilidad**: Facilitan la reutilización del código, reduciendo la duplicación.
+
+### ¿Cómo se implementan propiedades computadas con Composition API?
+Implementar propiedades computadas en Composition API sigue una lógica clara y sencilla.
+Un ejemplo simple: concatenar un nombre y apellido en un string completo.
+
+````vue
+import { ref, computed } from 'vue';
+
+export default {
+  setup() {
+    const firstName = ref('Felipe');
+    const lastName = ref('Muñoz');
+
+    const fullName = computed(() => `${firstName.value} ${lastName.value}`);
+
+    return {
+      fullName,
+    };
+  }
+}
+````
+
+#### Pasos clave:
+1. **Definir variables reactivas**: Se utiliza la función ref() para crear las propiedades reactivas firstName y lastName.
+2. **Crear propiedad computada**: Se utiliza la función computed() para declarar fullName, que concatenará firstName y lastName.
+3. **Devolver propiedades**: Se devuelve el valor en el retorno de setup para que el template pueda encontrarla.
+
+### ¿Cuáles son las mejores prácticas al usar funciones computadas?
++ **Cacheo o almacenamiento en caché**: Al tener dependencias reactivas, Vue solo vuelve a calcular la propiedad computada cuando una dependencia cambia.
++ **Evitar loops infinitos**: Al crear propiedades computadas, asegurarse de no tener dependencias recursivas que puedan causar un bucle infinito.
++ **No utilizar this dentro de setup**: Con Composition API, la función setup() no puede acceder a objetos this como en Options API. Tener cuidado cuando se migra código.
+
+### ¿Cómo se comparan Composition API y Options API al usar propiedades computadas?
+En la sintaxis de Options API, las propiedades computadas se definen usando computed como propiedad dentro de un objeto Vue.
+En Composition API sigue un enfoque funcional gracias a las funciones puras de JavaScript, lo que convierte el código en algo más modular y fácilmente mantenible.
+
+---
+
