@@ -14,6 +14,7 @@
 * [Clase 12 - Introducción a Composition API](#id12)
 * [Clase 13 - Ciclo de vida en Composition API](#id13)
 * [Clase 14 - Variables reactivas con ref y reactive](#id14)
+* [Clase 15 - Watch](#id15)
 
 ---
 
@@ -887,5 +888,68 @@ Elegir entre ref y reactive depende de tus necesidades específicas:
 
 + **ref**: Ideal para valores simples y primitivos, donde la reactividad solo se necesita para un único valor.
 + **reactive**: Perfecto para manejar objetos enteros y más complejos, eliminando la necesidad de acceder a propiedades con .value.
+
+---
+
+## Watch [15/23]<a name="id15"></a>
+Los "watchers" en Vue.js son esenciales para gestionar cambios en las aplicaciones, permitiéndote escuchar los cambios en un estado reactivo y reaccionar ante ellos.
+
+### ¿Qué son los watchers y cómo se implementan?
+Los watchers son **funciones observadoras** que se activan cuando cambia una variable reactiva, permitiendo acceder al valor antiguo y al nuevo para ejecutar acciones. Se asemejan a las propiedades computadas, pero en lugar de calcular valores, monitorean los cambios.
+Para implementar un watcher en el Composition API, se sigue el siguiente procedimiento:
+
+1. **Importar la función watch**: Se debe importar watch de Vue, ya que será necesaria para definir los listeners.
+````vue
+import { watch } from 'vue';
+````
+2. **Usar la función setup**: Dentro de setup(), defines los datos reactivos y posteriormente los observers.
+````vue
+setup() {
+  const counter = ref(0);
+  const object = reactive({ counter: 0 });
+
+  // Ejemplo de uso con reactive
+  watch(
+    () => object.counter,
+    (newValue, oldValue) => {
+      console.log('Nuevo valor:', newValue, 'Valor anterior:', oldValue);
+    }
+  );
+}
+````
+3. **Definir los parámetros del watcher**: Se deben definir dos valores:
+* Primer parámetro: El valor a observar, en este caso usando una función que accede a la propiedad reactiva.
+* Segundo parámetro: La función de callback que se ejecuta con cada cambio, recibiendo el nuevo y antiguo valor.
+
+### ¿Cómo se diferencia el uso entre ref y reactive?
+La diferencia principal al usar ref y reactive en el contexto de watchers radica en cómo se accede a los valores.
+
++ **Con ref()**: Se debe acceder al valor encapsulado usando .value.
+````vue
+const counter = ref(0);
+watch(
+  () => counter.value,
+  (newVal, oldVal) => {
+    // Manejo de cambios
+  }
+);
+````
++ **Con reactive**: Se accede al valor directamente porque reactive retorna una referencia al objeto original en forma de proxy.
+````vue
+const object = reactive({ counter: 0 });
+watch(
+  () => object.counter,
+  (newVal, oldVal) => {
+    // Manejo de cambios
+  }
+);
+````
+
+### ¿Qué se debe tener en cuenta al usar watchers con el Composition API?
+Implementar watchers con el Composition API difiere ligeramente a como se haría en el Options API. Aquí destaca:
+
++ **La programación funcional**: Utilizar watch en el Composition API implica una sintaxis funcional que genera una mejor gestión de la reactividad, accediendo a los valores de manera adecuada.
++ **Flexibilidad del callback**: Dentro de la función callback, se puede integrar cualquier lógica en vanilla JavaScript o características específicas de Vue, logrando así un espectro completo de reacciones en tiempo real.
++ **Ventajas de la sintaxis moderna**: La sintaxis basada en funciones permite mayor claridad y separación lógica dentro del componente, siendo más escalable en aplicaciones grandes.
 
 ---
