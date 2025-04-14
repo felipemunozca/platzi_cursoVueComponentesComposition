@@ -13,6 +13,7 @@
 * [Clase 11 - Mixins](#id11)
 * [Clase 12 - Introducción a Composition API](#id12)
 * [Clase 13 - Ciclo de vida en Composition API](#id13)
+* [Clase 14 - Variables reactivas con ref y reactive](#id14)
 
 ---
 
@@ -814,5 +815,77 @@ Estos ya no están disponibles como lo estaban en la sintaxis previa, pues Setup
 * Sintaxis simplificada: La transición a una función genera menos errores y una estructura más ordenada.
 * Compatibilidad y reactividad: Se integra de manera nativa con el sistema de reactividad, mejorando la manipulación de estados en la aplicación.
 * Organización del código: Facilita la separación de lógica de negocio y presentación, promoviendo una arquitectura más mantenible.
+
+---
+
+## Variables reactivas con ref y reactive [14/23]<a name="id14"></a>
+La reactividad es un principio clave en Vue.js. Es esencial entender cómo declarar variables reactivas mediante la función **ref()**.
+Esta función permite **crear una referencia reactiva a un dato**, lo que significa que cualquier cambio a este dato se reflejará automáticamente en las partes del componente que lo usan.
+
+### Ejemplo de uso de ref
+````vue
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const texto = ref('Hola Vue');
+    
+    return { texto };
+  }
+}
+````
+
++ **Creación de referencia reactiva**: Declara una variable utilizando la función ref y asigna un valor inicial.
++ **Acceso a valores**: En la función setup, utiliza la propiedad **.value** para leer o modificar los valores de estas variables reactivas.
+
+### ¿Cómo hacer disponibles estas variables en el componente?
+Las variables definidas con ref pueden utilizarse en el template del componente. **No es necesario usar .value** al acceder a ellas desde el template, ya que se detecta automáticamente los cambios. Por ejemplo:
+````vue
+<template>
+  <div>{{ texto }}</div>
+</template>
+````
+
+### ¿Cómo manejar las variables primitivas y los objetos reactivos?
+Cuando se trata de valores de tipo primitivo (números, cadenas, booleanos), la función **ref()** es suficiente. Sin embargo, para manejar objetos, es mejor usar la función **reactive()**.
+
+### Uso de reactive para objetos
+reactive permite definir variables reactivas que son objetos enteros, sin la necesidad de usar .value. Aquí un ejemplo práctico:
+````vue
+import { reactive } from 'vue';
+
+export default {
+  setup() {
+    const contador = reactive({ valor: 0 });
+
+    return { contador };
+  }
+}
+````
+
+### ¿Qué ventajas ofrece integrar Vanilla JS con setup?
+La función setup no solo admite las funciones de Vue, sino que también permite el uso de Vanilla JS para cualquier lógica adicional.
+Un ejemplo podría ser el uso de setInterval para actualizar un contador:
+````vue
+export default {
+  setup() {
+    const counter = ref(0);
+
+    setInterval(() => {
+      counter.value += 1;
+    }, 500);
+
+    return { counter };
+  }
+}
+````
+
+En este ejemplo, **counter.value** se incrementa de forma automática cada 500 milisegundos, mostrando la potencia de la reactividad en acción.
+
+### ¿Por qué es importante elegir entre ref y reactive?
+Elegir entre ref y reactive depende de tus necesidades específicas:
+
++ **ref**: Ideal para valores simples y primitivos, donde la reactividad solo se necesita para un único valor.
++ **reactive**: Perfecto para manejar objetos enteros y más complejos, eliminando la necesidad de acceder a propiedades con .value.
 
 ---
