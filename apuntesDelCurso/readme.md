@@ -16,6 +16,7 @@
 * [Clase 14 - Variables reactivas con ref y reactive](#id14)
 * [Clase 15 - Watch](#id15)
 * [Clase 16 - Computed](#id16)
+* [Clase 17 - Uso de props](#id17)
 
 ---
 
@@ -1001,3 +1002,46 @@ En Composition API sigue un enfoque funcional gracias a las funciones puras de J
 
 ---
 
+## Uso de props [17/23]<a name="id17"></a>
+En el contexto de Vue.js, los props son **atributos que se pasan desde un componente padre a un componente hijo** y que permiten compartir datos entre componentes.
+
+Al definir los props en el componente hijo, se pueden establecer:
++ **Tipo de dato**: Para asegurar que los datos recibidos son del tipo correcto, como string, number, etc.
++ **Valor por defecto**: Define un valor por defecto en caso de que el prop no se envíe desde el componente padre.
++ **Requerido**: Indica si el prop es obligatorio (true o false).
+
+### ¿Cómo se definen los props en Composition API?
+Para utilizar los props en Composition API, primero se deben definir en el componente hijo.
+Por ejemplo, si se desea pasar un nombre y apellido desde el componente App al componente Home:
+````vue
+props: {
+  firstName: String,
+  lastName: String
+}
+````
+
+En el componente padre (App.vue), se pasaría de esta manera:
+````vue
+<Home firstName="Agustina" lastName="Muñoz" />
+````
+
+### ¿Cómo se leen los props en la función setup?
+El método setup es el lugar donde se leerán los props. La función setup recibe dos argumentos: props y context.
+
+### Conversión de props a referencias reactivas
+Por defecto, los props no son reactivos, lo que podría causar que no detecten cambios si los valores se modifican dinámicamente. Para solucionar esto, Vue ofrece la función **toRefs()**, que convierte un objeto plano en referencias reactivas:
+````vue
+import { toRefs } from 'vue';
+
+export default {
+  setup(props) {
+    const { firstName, lastName } = toRefs(props);
+    return { firstName, lastName };
+  }
+}
+````
+
+### ¿Por qué usar toRefs?
+Es crucial cuando se desea que los cambios en los datos desde el componente padre se reflejen automáticamente en el hijo. Sin toRefs, los props actuarían como objetos estáticos en lugar de reactivos.
+
+---

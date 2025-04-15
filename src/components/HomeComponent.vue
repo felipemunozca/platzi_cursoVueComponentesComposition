@@ -1,23 +1,25 @@
 <template>
-  <!-- <div>Nombre completo: {{ firstName }} {{ lastName }}</div> -->
   <div>Nombre completo: {{ fullName }}</div>
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { toRefs, computed } from "vue";
 
 export default {
-  setup() {
-    const firstName = ref("Felipe");
-    const lastName = ref("Muñoz");
+  props: {
+    firstName: String,
+    lastName: String,
+  },
+
+  setup(props) {
+    // const { firstName, lastName } = props; // Se pierde la reactividad
+    const { firstName, lastName } = toRefs(props);
 
     const fullName = computed(() => {
       return `${firstName.value} ${lastName.value}`;
     });
 
     return {
-      // firstName,
-      // lastName,
       fullName,
     };
   },
