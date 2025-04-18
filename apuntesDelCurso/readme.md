@@ -17,6 +17,7 @@
 * [Clase 15 - Watch](#id15)
 * [Clase 16 - Computed](#id16)
 * [Clase 17 - Uso de props](#id17)
+* [Clase 18 - Uso de context](#id18)
 
 ---
 
@@ -1043,5 +1044,46 @@ export default {
 
 ### ¿Por qué usar toRefs?
 Es crucial cuando se desea que los cambios en los datos desde el componente padre se reflejen automáticamente en el hijo. Sin toRefs, los props actuarían como objetos estáticos en lugar de reactivos.
+
+---
+
+## Uso de context [18/23]<a name="id18"></a>
+Un elemento esencial en la funcionalidad de los componentes de Vue es el contexto, el cual proporciona varias herramientas para gestionar propiedades y eventos en los componentes. Este contexto forma parte del segundo argumento de la función setup y ofrece una serie de datos valiosos.
+
+### ¿Cuáles son los elementos clave de context?
+Cuando se utiliza setup() en un componente, se puede acceder a cuatro elementos proporcionados por context:
+
++ **Attrs**: Representa los atributos que recibe el componente que no son declarados como props. A diferencia de las props, los atributos no son reactivos. Por ejemplo, si un componente recibe atributos que no fueron declarados como props en Vue.js, se consideran automáticamente como atributos.
++ **Emit**: Esta función es utilizada para emitir eventos desde el componente. Emit permite pasar el nombre del evento y sus parámetros.
++ **Expose**: Permite hacer accesibles ciertas variables internas del componente a otros componentes, expose debe ser llamado una única vez y permite definir qué valores se pueden exponer, facilitando que otros elementos accedan a ellos.
++ **Slots**: Proporciona acceso a los slots del componente, permitiendo la personalización del contenido dentro de un componente desde otros elementos.
+
+### ¿Cómo utilizar el context en Vue.js?
+Hay diferentes formas de manejarlo dentro de nuestro código:
+
+* Se puede acceder a los elementos de context usando la notación de objeto o la destructuración de ECMAScript utilizando llaves { }. Así, es posible, por ejemplo, acceder a los attrs directamente como si fueran variables.
+````vue
+const { emit, expose } = context;
+````
+* La función expose se puede utilizar de la siguiente manera dentro de la función setup para publicar variables específicas:
+````
+expose({
+  fullName,
+});
+````
+
+### ¿Qué limitaciones tiene la función setup?
+La función setup tiene ciertas restricciones debido a que se ejecuta antes del ciclo de vida del componente. Esto afecta su capacidad para interactuar con algunos elementos tradicionales como:
+
++ **Refs**: No se puede usar *this.refs* porque setup no tiene acceso a la instancia completa del componente.
++ **Métodos de Option API**: Métodos tradicionales definidos fuera de setup no están accesibles dentro de ella.
++ **Data y Computed**: Se necesita utilizar reactividad proporcionada por Composition API (como ref, reactive) ya que los métodos tradicionales que dependen de *this* no están disponibles.
+
+Para contrarrestar estas limitaciones, se pueden definir funciones de JavaScript dentro de setup para manejar métodos y reactividad.
+
+### Recomendaciones prácticas
+* Asegurarse de convertir las props y datos en elementos reactivos usando herramientas como ref, reactive, o toRefs.
+* Definir funciones directas dentro de setup para mantenerlas accesibles y utilizables.
+* Familiarizarse con la Composition API para maximizar las capacidades de reactividad de Vue.
 
 ---
