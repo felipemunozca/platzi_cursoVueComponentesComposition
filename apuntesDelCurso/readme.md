@@ -18,6 +18,7 @@
 * [Clase 16 - Computed](#id16)
 * [Clase 17 - Uso de props](#id17)
 * [Clase 18 - Uso de context](#id18)
+* [Clase 19 - Provide / Inject](#id19)
 
 ---
 
@@ -1085,5 +1086,60 @@ Para contrarrestar estas limitaciones, se pueden definir funciones de JavaScript
 * Asegurarse de convertir las props y datos en elementos reactivos usando herramientas como ref, reactive, o toRefs.
 * Definir funciones directas dentro de setup para mantenerlas accesibles y utilizables.
 * Familiarizarse con la Composition API para maximizar las capacidades de reactividad de Vue.
+
+---
+
+## Provide / Inject [19/23]<a name="id19"></a>
+Las funciones **provide** e **inject** ofrecen una solución elegante para compartir datos entre un componente y sus descendientes, asi se evita la necesidad de pasar datos de forma manual a través de cada nivel jerárquico de un componente, lo que podría resultar en un código desordenado y props innecesarios.
+
+### Implementación en Composition API
+Al utilizar provide e inject con la Composition API, se debe trabajar dentro de la función setup().
+
+### Crear provide en el componente principal
+1. Configurar setup: se crea la función setup() en el componente principal.
+````vue
+import { provide } from 'vue';
+export default {
+  setup() {
+    // Define el valor a proveer
+    provide('username', 'DianaNerd');
+  }
+}
+````
+2. Definir el valor: Se usa provide para establecer un par clave-valor, donde 'username' es la clave que se compartirá con los componentes descendientes.
+
+### Recibir valores en componentes hijos con inject
+Para recibir los valores proporcionados en un componente hijo, se utiliza inject, que también debe ser llamado dentro de la función setup.
+
+1. Importar inject: Se añade inject dentro de la importación desde Vue.
+````vue
+import { inject } from 'vue';
+export default {
+  setup() {
+    // Recibe el valor proporcionado
+    const userName = inject('username');
+    return {
+      userName
+    };
+  }
+}
+````
+2. Acceder a los valores: Se cea una variable en setup que reciba el valor inyectado, de manera que esté disponible en el template del componente.
+
+### Reactividad en provide e inject
+Por defecto, usar provide e inject no genera reactividad. Para lograr este comportamiento, se necesita emplear herramientas como ref al definir valores en provide. Esto permitirá que los valores sean reactivos y reflejen cambios automáticamente.
+````vue
+import { provide, ref } from 'vue';
+export default {
+  setup() {
+    const username = ref('DianaNerd');
+    provide('username', username);
+    return { username };
+  }
+}
+````
+
+### Ventajas del uso de Composition API
+El cambio de Options API a Composition API no solo mejora la organización del código, sino que también reduce significativamente el número de líneas necesarias para realizar las mismas operaciones. Este enfoque no solo mejora la legibilidad y mantenibilidad del código, sino que también fomenta un entorno más limpio y funcional en Vue.
 
 ---
