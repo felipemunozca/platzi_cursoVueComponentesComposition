@@ -19,6 +19,7 @@
 * [Clase 17 - Uso de props](#id17)
 * [Clase 18 - Uso de context](#id18)
 * [Clase 19 - Provide / Inject](#id19)
+* [Clase 20 - Template refs](#id20)
 
 ---
 
@@ -1141,5 +1142,59 @@ export default {
 
 ### Ventajas del uso de Composition API
 El cambio de Options API a Composition API no solo mejora la organización del código, sino que también reduce significativamente el número de líneas necesarias para realizar las mismas operaciones. Este enfoque no solo mejora la legibilidad y mantenibilidad del código, sino que también fomenta un entorno más limpio y funcional en Vue.
+
+---
+
+## Template refs [20/23]<a name="id20"></a>
+Composition API, ofrece a los desarrolladores una manera potente de interactuar y manipular elementos HTML a través de sus **refs**, o **referencias de plantillas**. Aprender a usar las template refs con la Composition API es esencial para sacar el máximo provecho a este framework.
+
+### ¿Qué son los template refs?
+Son referencias directas a elementos del DOM o componentes dentro de las plantillas.
+En el Options API clásico, se accedía a estos elementos utilizando *this.$refs*, permitiéndote manipular y acceder a cualquier propiedad del mismo. Sin embargo, en la Composition API, la forma de trabajar con estas referencias cambia, ofreciendo un acceso más reactivo y programático.
+
+### ¿Cómo crear una referencia de plantilla?
+Ejemplo de cómo crear una referencia para un botón en una plantilla:
+
+1. Agregar el botón con una referencia:
+````vue
+<template>
+  <button ref="btn">Click</button>
+</template>
+````
+2. Declarar la referencia en la función setup:
+````vue
+<script>
+import { ref, watch } from 'vue';
+export default {
+  setup() {
+    // Crear una referencia reactiva
+    const btn = ref(null);
+    // Exportar la variable para acceder desde el template
+    return { btn };
+  }
+};
+</script>
+````
+
+### ¿Cómo acceder al valor de un template ref?
+Una vez que el componente se monte y la referencia del template esté lista, se puede acceder al valor actual del elemento HTML utilizando **.value**. Este patrón permite manipular el DOM de manera reactiva y flexible.
+````vue
+// Acceso al valor del template ref
+console.log(btn.value);
+````
+
+### ¿Cómo detectar cambios en el valor de una referencia?
+Dado que las referencias pueden cambiar una vez que el componente se ha montado, se utiliza normalmente watch para detectar y responder a los cambios:
+````vue
+watch(btn, (newVal) => {
+  console.log(newVal); // Imprime el nuevo valor cuando el botón se monta en el DOM.
+});
+````
+
+### ¿Por qué usar Composition API en lugar de Options API?
+
++ **Modularidad y Reusabilidad**: Facilita la estructura y división del código en funciones reutilizables.
++ **Mejor control del ciclo de vida**: La función setup se ejecuta antes de que el componente se monte, ofreciendo control temprano del estado.
++ **Mayor claridad**: La separación lógica mejora la claridad en aplicaciones grandes y complejas.
 
 ---
