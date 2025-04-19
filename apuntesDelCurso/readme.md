@@ -21,6 +21,7 @@
 * [Clase 19 - Provide / Inject](#id19)
 * [Clase 20 - Template refs](#id20) //
 * [Clase 21 - Composition VS Options](#id21)
+* [Clase 22 - Script setup](#id22)
 
 ---
 
@@ -1249,3 +1250,50 @@ No hay una respuesta definitiva sobre cuál API es "mejor", ya que depende del t
 Ambas APIs proporcionan herramientas poderosas y es decisión del programador elegir la que mejor se adapte a las necesidades específicas de cada proyecto.
 
 ---
+
+## Script setup [22/23]<a name="id22"></a>
+La función **script setup** es una característica que facilita la definición de componentes en **Single File Components**, al tiempo que ofrece una sintaxis más limpia y concisa.
+Al usar script setup, no se necesita crear un export default, ya que todo el código dentro de este bloque es tratado como parte de la función setup.
+
+### ¿Cómo refactorizar tu código con script setup?
+Conviene refactorizar el código existente. Por ejemplo: se tiene un componente complejo con variables, propiedades (props), funciones computadas y más. El primer paso es copiar todo el contenido dentro de setup, ignorando el return, y colocarlo fuera, dentro del bloque de script setup. Este es un método directo para hacer más limpio y manejable el código.
+````vue
+// Ejemplo de uso de script setup
+<script setup>
+import { ref, computed } from 'vue';
+import { defineProps, defineExpose } from 'vue';
+
+// Se definen las props
+const props = defineProps(['username', 'fullname']);
+
+// Se usa ref y funciones computadas
+const btn = ref(null);
+const fullName = computed(() => `${props.username} ${props.fullname}`);
+
+// Se exponen referencias individuales
+defineExpose({ btn });
+</script>
+````
+
+### ¿Cómo definir y utilizar las propiedades con defineProps?
+Para acceder a las propiedades en script setup, se introduce la función **defineProps()**. Esta función permite declarar y usar las props de manera más funcional y clara, sin la necesidad de definirlas en el export default.
+
++ **Uso de defineProps**: Esta función permite acceder a las props sin necesidad de reactividad.
+
+````vue
+const props = defineProps(['username', 'fullname']);
+````
+
+Esta sintaxis respeta la reactividad del framework y permite una gestión más directa de las propiedades del componente.
+
+### ¿Qué papel juegan las funciones auxiliares como defineExpose?
+Las funciones como **defineExpose()** son cruciales para exponer elementos específicos del componente a instancias externas. Esto se logra sin el uso del contexto tradicional de Vue y simplifica la interacción con otros componentes.
+
++ **Aplicación de defineExpose**: Permite exponer referencias y variables para su uso por instancias externas.
+
+````vue
+defineExpose({ btn });
+````
+
+### ¿Cuáles son las consideraciones actuales de script setup?
+Aunque script setup es una innovación prometedora, es vital recordar que se encontraba en fase experimental al momento de su lanzamiento con Vue.js 3. Esto implica que podría haber cambios futuros en la API o ajustes menores.
