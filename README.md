@@ -1,4 +1,12 @@
-# options
+# Platzi - Curso de Vue.js: Componentes y Composition API
+
+Escuela Desarrollo Web.
+
+Ruta: Frontend con Vue.js
+
+Curso impartido por la profesora: Diana Martínez
+
+---
 
 ## Project setup
 ```
