@@ -19,7 +19,8 @@
 * [Clase 17 - Uso de props](#id17)
 * [Clase 18 - Uso de context](#id18)
 * [Clase 19 - Provide / Inject](#id19)
-* [Clase 20 - Template refs](#id20)
+* [Clase 20 - Template refs](#id20) //
+* [Clase 21 - Composition VS Options](#id21)
 
 ---
 
@@ -1196,5 +1197,55 @@ watch(btn, (newVal) => {
 + **Modularidad y Reusabilidad**: Facilita la estructura y división del código en funciones reutilizables.
 + **Mejor control del ciclo de vida**: La función setup se ejecuta antes de que el componente se monte, ofreciendo control temprano del estado.
 + **Mayor claridad**: La separación lógica mejora la claridad en aplicaciones grandes y complejas.
+
+---
+
+## Composition VS Options [21/23]<a name="id21"></a>
+Uno de los grandes dilemas de utilizar Vue es elegir entre **Composition API** y **Options API**. Ambas son opciones válidas, pero presentan diferencias significativas que pueden afectar la organización y desarrollo de la aplicación.
+
+### ¿Cómo se estructura cada API?
+
+#### Options API:
+* Las configuraciones se realizan mediante un gran objeto JSON.
+* Utiliza métodos específicos dentro de secciones como methods, computed, y watch.
+* La reactividad y el acceso a la instancia de Vue se gestionan con **this**.
+* La organización del código puede requerir desplazarse entre diferentes secciones para encontrar métodos, propiedades computadas y referencias.
+
+#### Composition API:
+* Utiliza funciones en lugar de objetos para manejar las configuraciones.
+* Centraliza el código y las lógicas dentro de la función **setup()**.
+* El acceso a propiedades y a la reactividad se manejan utilizando ref, toRefs, computed, y otras funciones reactivas.
+* Todo el código relacionado tiende a quedar agrupado, lo que facilita la lectura y el desarrollo.
+
+### ¿Cuáles son las ventajas de cada enfoque?
+
+#### Ventajas del Options API:
+* Mejor adaptación para quienes vienen de un desarrollo con JavaScript tradicional.
+* Facilita la transición para quienes han trabajado previamente con otras bibliotecas que utilizan una estructura similar.
+* Organiza el código en secciones claramente definidas.
+
+#### Ventajas del Composition API:
+* Mejora la organización al permitir que todo el código relacionado permanezca junto.
+* Simplifica la creación de componentes complejos al ofrecer un enfoque más funcional.
+* Usa la reactividad de Vue.js de manera más natural con Vanilla JavaScript.
+
+### ¿Cuáles son las desventajas de cada enfoque?
+
+#### Desventajas del Options API:
+* Puede volverse tedioso navegar entre secciones extensas de un componente.
+* Requiere un desplazamiento vertical considerable para gestionar métodos complejos.
+
+#### Desventajas del Composition API:
+* Introduce un nivel de complejidad con el uso de ciertas funciones reactivas.
+* Requiere una curva de aprendizaje mayor si solo se esta acostumbrado a una estructura más orientada a objetos.
+
+### ¿Cuál debería elegir para mi proyecto?
+No hay una respuesta definitiva sobre cuál API es "mejor", ya que depende del tipo de proyecto que se este desarrollando y de las preferencias personales:
+
+* Proyectos simples o que utilicen Vue.js como librería: Se podría beneficiar con el enfoque estructurado del Options API.
+* Proyectos complejos o que integren Vue.js como framework completo: La flexibilidad y organización del Composition API podrían ser más beneficiosas.
+
+### En conclusión
+Ambas APIs proporcionan herramientas poderosas y es decisión del programador elegir la que mejor se adapte a las necesidades específicas de cada proyecto.
 
 ---
