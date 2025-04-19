@@ -1,9 +1,9 @@
 <!--  
     N_4.1: El archivo app.vue es nuestro componente principal.
     Esta conformado por las etiquetas:
-    <template>
-    <script>
-    <style>
+        <template>
+        <script>
+        <style>
 -->
 <template>
     <img alt="Vue logo" src="./assets/logo.png" />
@@ -24,16 +24,16 @@
 </template>
 
 <script>
-/*  
-    N_4.2: Cuando se importa un componente se hace desde la carpeta components y se debe agregar con el nombre completo agregando 
-        la extension.
-    Luego dentro del json de export por defecto, se declara este componente para poder dejarlo utilizable dentro del template.
-    Se pueden agregar diferentes componentes a la vez, no olvidar separarlos por comas.
-* 
-    N_4.3: Algunas veces puede existir ambigüedades al utilizar componentes con nombres parecidos, por lo que se puede asignar un 
-        nuevo nombre a un componente y luego llamarlo como se si tratara de una variable.
-    Se asi el nombre "Saludo" al componente HelloWorld.
-*/
+/**
+ * N_4.2: Cuando se importa un componente se hace desde la carpeta components y se debe agregar con el nombre completo agregando 
+ *      la extension.
+ * Luego dentro del json de export por defecto, se declara este componente para poder dejarlo utilizable dentro del template.
+ * Se pueden agregar diferentes componentes a la vez, no olvidar separarlos por comas.
+ * 
+ * N_4.3: Algunas veces puede existir ambigüedades al utilizar componentes con nombres parecidos, por lo que se puede asignar un 
+ *      nuevo nombre a un componente y luego llamarlo como se si tratara de una variable.
+ * Se asi el nombre "Saludo" al componente HelloWorld.
+ */
 import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
@@ -41,10 +41,10 @@ export default {
     components: {
         Saludo: HelloWorld,
     },
-    /*
-        N_4.7: Se agrega la función data() para agregar la nueva variable que se utilizara en el componente. Este retornara el 
-            valor que tiene Saludo y para probar si funciona, se comenta el código donde se llama a este componente Saludo.
-    */
+    /**
+     * N_4.7: Se agrega la función data() para agregar la nueva variable que se utilizara en el componente. Este retornara el 
+     *      valor que tiene Saludo y para probar si funciona, se comenta el código donde se llama a este componente Saludo.
+     */
     data() {
         return {
             miComponente: "Saludo",

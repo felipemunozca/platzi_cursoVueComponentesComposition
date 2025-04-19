@@ -3,7 +3,7 @@
     Se eliminan los componentes creados en clases anteriores.
     Se crea un nuevo componente llamado ModalComponent.vue
     Como convención en Vue, los componentes son nombrados con la primera letra en Mayúscula.
- *  
+    
     N_7.3: Se agrega el componente Modal dentro del template.
 -->
 <template>
@@ -13,10 +13,10 @@
 </template>
 
 <script>
-/*
-    N_7.4: Si los plugins de Vue funcionan correctamente, la linea con el import se agregara de forma automática.
-    Ademas se agregara el nombre Modal dentro de la sección components:{}.
-*/
+/**
+ * N_7.4: Si los plugins de Vue funcionan correctamente, la linea con el import se agregara de forma automática.
+ * Ademas se agregara el nombre Modal dentro de la sección components:{}.
+ */
 import Modal from "./components/ModalComponent.vue";
 
 export default {

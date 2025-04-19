@@ -18,18 +18,18 @@
 </template>
 
 <script>
-/*  
-    N_5.3: No siempre es necesario que todos los componentes o el contenido de una aplicación cargue toda al mismo tiempo, sino que 
-        se puede dar prioridad a que primero cargue lo mas importante, y luego lo demás (Esto se hace indispensable en aplicaciones 
-        muy grandes).
-    Para este tipo de casos, Vue.js cuenta con los componentes asíncronos.
-    Lo primero es importar una función de Vue llamada defineAsyncComponent.
-    Luego, no se importara el componente de la forma que estábamos viendo hasta ahora, sino que se creara una constante la cual sera 
-        igual al método defineAsyncComponent y utilizando una función flecha, se agrega el import del componente.
-    IMPORTANTE: Eslint mostrara un error si se escribe el código como el profesor, todo en una linea, se debe seguir la ayuda de Eslint
-        y utilizar los espaciados y enter necesarios para que quede formateado a 3 lineas. De no hacerlo asi, se producirá un error 
-        y el servidor se caerá.
-*/
+/**
+ * N_5.3: No siempre es necesario que todos los componentes o el contenido de una aplicación cargue toda al mismo tiempo, sino que 
+ *      se puede dar prioridad a que primero cargue lo mas importante, y luego lo demás (Esto se hace indispensable en aplicaciones 
+ *      muy grandes).
+ * Para este tipo de casos, Vue.js cuenta con los componentes asíncronos.
+ * Lo primero es importar una función de Vue llamada defineAsyncComponent.
+ * Luego, no se importara el componente de la forma que estábamos viendo hasta ahora, sino que se creara una constante la cual sera 
+ *      igual al método defineAsyncComponent y utilizando una función flecha, se agrega el import del componente.
+ * IMPORTANTE: Eslint mostrara un error si se escribe el código como el profesor, todo en una linea, se debe seguir la ayuda de 
+ *      Eslint y utilizar los espaciados y enter necesarios para que quede formateado a 3 lineas. De no hacerlo asi, se producirá un 
+ *      error y el servidor se caerá.
+ */
 import { defineAsyncComponent } from "vue";
 
 const HelloWorld = defineAsyncComponent(() =>

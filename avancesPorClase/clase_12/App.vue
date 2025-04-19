@@ -7,9 +7,9 @@
 </template>
 
 <script>
-/*
-    N_12.3: Se importa el archivo componente.
-*/
+/**
+ * N_12.3: Se importa el archivo componente.
+ */
 import UserRepositories from "./components/UserRepositories.vue";
 
 export default {
